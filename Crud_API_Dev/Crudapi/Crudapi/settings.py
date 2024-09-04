@@ -12,8 +12,24 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+
+
+#code to import dotenv into sethings.py
+import os
+
+from dotenv import load_dotenv
+load_dotenv()
+
+MONGO_DB_Item = os.getenv('MONGO_DB_Item')
+MONGO_DB_USER = os.getenv('MONGO_DB_USER')
+MONGO_DB_PASSWORD = os.getenv('MONGO_DB_PASSWORD')
+MONGO_DB_HOST = os.getenv('MONGO_DB_HOST')
+MONGO_DB_PORT = os.getenv('MONGO_DB_PORT')
 
 
 # Quick-start development settings - unsuitable for production
@@ -74,10 +90,14 @@ WSGI_APPLICATION = 'Crudapi.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+   'default': {
+        'ENGINE': 'djongo',
+        'NAME': MONGO_DB_Item,
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            'host': f'mongodb://{MONGO_DB_USER}:{MONGO_DB_PASSWORD}@{MONGO_DB_HOST}:{MONGO_DB_PORT}/{MONGO_DB_Item}?authSource=admin'
+              }
+}
 }
 
 
